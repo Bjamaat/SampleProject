@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+          jcr:description="This template uses the sample page component for the site."
+          jcr:primaryType="cq:Template"
+          jcr:title="Samplec Page"
+          allowedPaths="[/content/sampleProject/us(/.*)?]"
+          ranking="{Long}100">
+    <jcr:content
+            jcr:primaryType="cq:PageContent"
+            sling:resourceType="sampleProject/components/pages/samplePage"
+            content_layout="container-fluid">
+        <main-par
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="foundation/components/parsys">
+        </main-par>
+    </jcr:content>
+</jcr:root>

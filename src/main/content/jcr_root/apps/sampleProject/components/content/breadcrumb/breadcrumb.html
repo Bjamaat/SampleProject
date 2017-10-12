@@ -1,0 +1,14 @@
+<p data-sly-test="${wcmmode.edit}">{'Click here to configure the Breadcrumb component' @i18n}</p> <!-- or @ context='html' -->
+<section data-sly-use.model="com.sampleProject.service.models.BreadcrumbsModel">
+    <div>
+        <ol class="breadcrumbs" data-sly-list.item="${model.breadcrumbs}">
+            <control data-sly-unwrap data-sly-test="${item.leaf}">
+                <li class="active-page">${item.text}</li>
+            </control>
+            <control data-sly-unwrap data-sly-test="${!item.leaf}">
+                <li><a href="${item.path}">${item.text}</a></li>
+            </control>
+        </ol>
+
+    </div>
+</section>

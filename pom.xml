@@ -1,0 +1,82 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>sample-project</groupId>
+    <artifactId>com.sampleProject.service</artifactId>
+    <packaging>bundle</packaging>
+    <name>Sample Project Global Services</name>
+<version>1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>com.adobe.aem</groupId>
+            <artifactId>uber-jar</artifactId>
+            <version>6.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.6.4</version>
+        </dependency>
+    </dependencies>
+
+<properties>
+    <aem.host>localhost</aem.host>
+    <aem.port>4502</aem.port>
+    <aem.publish.host>localhost</aem.publish.host>
+    <aem.publish.port>4503</aem.publish.port>
+</properties>
+<!-- We should have all environments and port inside setting.xml in user profile
+
+also we need to have different module for project, and it is better to creat
+under sample project which is parent module
+such as view, service/osgi, content,...
+
+This needs to have more plugin and dependency for java and others such as checkstyle and javadoc
+In 2 hours I wasn't able to do more than this special I have started late at night. It took from 10-12 pm
+
+-->
+
+<profiles>
+    <profile>
+        <id>autoInstallPackage</id>
+        <activation>
+            <activeByDefault>false</activeByDefault>
+        </activation>
+
+    </profile>
+</profiles>
+    <!-- for packaging as an OSGi bundle, we use the maven-bundle-plugin -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Export-Package>
+                            com.sampleProject.service.*
+                        </Export-Package>
+                        <Import-Package>
+                           <!-- -->
+                        </Import-Package>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Activator>${project.artifactId}.Activator</Bundle-Activator>
+                        <Include-Resource>
+                            {maven-resources}
+                        </Include-Resource>
+                        <Embed-Dependency>
+
+                        </Embed-Dependency>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+
