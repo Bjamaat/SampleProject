@@ -23,6 +23,19 @@
                         emptyText="/content/sampleProject/us"
                         name="./rootPath"/>
                 </items>
+                <!-- Here we can also have multifield of pathbrowser for author to exclude some pages-->
+                <excludePages
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="granite/ui/components/foundation/form/multifield"
+                        fieldDescription="Click 'Add field' to add new page to exclude."
+                        fieldLabel="Add New Page">
+                    <field
+                            jcr:primaryType="nt:unstructured"
+                            sling:resourceType="granite/ui/components/foundation/form/pathbrowser"
+                            rootPath="/content/sampleProject"
+                            required="true"
+                            name="./excludePages"/>
+                </excludePages>
             </column>
         </items>
     </content>

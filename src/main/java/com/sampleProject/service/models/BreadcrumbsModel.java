@@ -11,7 +11,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 // It was other option to use slingModel which is more prefered in aem 6.2/6.3
 public class BreadcrumbsModel extends WCMUse {
@@ -23,6 +25,9 @@ public class BreadcrumbsModel extends WCMUse {
     @Override
     public void activate() throws Exception {
         log.debug("breadcrumb starts...");
+
+        // Here we will get multifield of pathbrowser of author to exclude those pages
+        List<String> excludePages = getProperties("excludePages");
 
         // Suppose that we are doing it in Max 5 level
         // 1 > 2 > 3 > 4 > 5
@@ -47,9 +52,10 @@ public class BreadcrumbsModel extends WCMUse {
             if (level == (currentLevel - 1)) {
                 leaf = true;
             }
-
+            // with currPage we have page resource object and we get path of it
             Breadcrumb bc = new Breadcrumb(currPage.getPath() + ".html", title, leaf);
-            if (!shouldSkip(currPage, valueMap, bc)) {
+            // if it is not directory/without title/ it is not in multified list we will add it to breadcrumbs
+            if (!shouldSkip(currPage, valueMap, bc) && !isExcludePages(excludePages, currPage.getPath())) {
                 breadcrumbs.add(bc);
             }
 
@@ -95,6 +101,26 @@ public class BreadcrumbsModel extends WCMUse {
             return true;
         }
         return false;
+    }
+
+    /**
+     * If it is in the multifield list we will set flag to true
+     * @param excludePages
+     * @param pagePath
+     * @return
+     */
+    private boolean isExcludePages(List<String> excludePages, String pagePath) {
+        // is it in excludePages list or not
+        boolean isExclude = false;
+        int num = excludePages.size();
+        while (num > 0 && isExclude == false) {
+            if (excludePages.get(num) == pagePath) {
+                isExclude = true;
+                break;
+            }
+            num --;
+        }
+        return isExclude;
     }
 
     public List<Breadcrumb> getBreadcrumbs() {
